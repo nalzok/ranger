@@ -19,6 +19,7 @@
 #include <algorithm>
 
 #include "globals.h"
+#include "pcg_random.hpp"
 
 namespace ranger {
 
@@ -169,7 +170,7 @@ public:
     return is_ordered_variable[varID];
   }
 
-  void permuteSampleIDs(std::mt19937_64 random_number_generator) {
+  void permuteSampleIDs(pcg64 random_number_generator) {
     permuted_sampleIDs.resize(num_rows);
     std::iota(permuted_sampleIDs.begin(), permuted_sampleIDs.end(), 0);
     std::shuffle(permuted_sampleIDs.begin(), permuted_sampleIDs.end(), random_number_generator);

@@ -27,6 +27,7 @@
 #include "globals.h"
 #include "Tree.h"
 #include "Data.h"
+#include "pcg_random.hpp"
 
 namespace ranger {
 
@@ -232,7 +233,7 @@ protected:
   std::vector<std::vector<size_t>> manual_inbag;
 
   // Random number generator
-  std::mt19937_64 random_number_generator;
+  pcg64 random_number_generator;
 
   std::string output_prefix;
   ImportanceMode importance_mode;

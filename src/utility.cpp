@@ -24,6 +24,7 @@
 #include "utility.h"
 #include "globals.h"
 #include "Data.h"
+#include "pcg_random.hpp"
 
 namespace ranger {
 
@@ -81,7 +82,7 @@ void loadDoubleVectorFromFile(std::vector<double>& result, std::string filename)
   }
 } // #nocov end
 
-void drawWithoutReplacementSkip(std::vector<size_t>& result, std::mt19937_64& random_number_generator, size_t max,
+void drawWithoutReplacementSkip(std::vector<size_t>& result, pcg64& random_number_generator, size_t max,
     const std::vector<size_t>& skip, size_t num_samples) {
   if (num_samples < max / 10) {
     drawWithoutReplacementSimple(result, random_number_generator, max, skip, num_samples);
@@ -91,7 +92,7 @@ void drawWithoutReplacementSkip(std::vector<size_t>& result, std::mt19937_64& ra
   }
 }
 
-void drawWithoutReplacementSimple(std::vector<size_t>& result, std::mt19937_64& random_number_generator, size_t max,
+void drawWithoutReplacementSimple(std::vector<size_t>& result, pcg64& random_number_generator, size_t max,
     const std::vector<size_t>& skip, size_t num_samples) {
 
   result.reserve(num_samples);
@@ -116,7 +117,7 @@ void drawWithoutReplacementSimple(std::vector<size_t>& result, std::mt19937_64& 
   }
 }
 
-void drawWithoutReplacementFisherYates(std::vector<size_t>& result, std::mt19937_64& random_number_generator,
+void drawWithoutReplacementFisherYates(std::vector<size_t>& result, pcg64& random_number_generator,
     size_t max, const std::vector<size_t>& skip, size_t num_samples) {
 
   // Create indices
@@ -138,7 +139,7 @@ void drawWithoutReplacementFisherYates(std::vector<size_t>& result, std::mt19937
   result.resize(num_samples);
 }
 
-void drawWithoutReplacementWeighted(std::vector<size_t>& result, std::mt19937_64& random_number_generator,
+void drawWithoutReplacementWeighted(std::vector<size_t>& result, pcg64& random_number_generator,
     const std::vector<size_t>& indices, size_t num_samples, const std::vector<double>& weights) {
 
   result.reserve(num_samples);
@@ -158,7 +159,7 @@ void drawWithoutReplacementWeighted(std::vector<size_t>& result, std::mt19937_64
   }
 }
 
-void drawWithoutReplacementWeighted(std::vector<size_t>& result, std::mt19937_64& random_number_generator,
+void drawWithoutReplacementWeighted(std::vector<size_t>& result, pcg64& random_number_generator,
     size_t max_index, size_t num_samples, const std::vector<double>& weights) {
 
   result.reserve(num_samples);
@@ -179,7 +180,7 @@ void drawWithoutReplacementWeighted(std::vector<size_t>& result, std::mt19937_64
 }
 
 double mostFrequentValue(const std::unordered_map<double, size_t>& class_count,
-    std::mt19937_64 random_number_generator) {
+    pcg64 random_number_generator) {
   std::vector<double> major_classes;
 
   // Find maximum count
@@ -320,7 +321,7 @@ void splitString(std::vector<std::string>& result, const std::string& input, cha
 } // #nocov end
 
 void shuffleAndSplit(std::vector<size_t>& first_part, std::vector<size_t>& second_part, size_t n_all, size_t n_first,
-    std::mt19937_64 random_number_generator) {
+    pcg64 random_number_generator) {
 
   // Reserve space
   first_part.resize(n_all);
@@ -338,7 +339,7 @@ void shuffleAndSplit(std::vector<size_t>& first_part, std::vector<size_t>& secon
 }
 
 void shuffleAndSplitAppend(std::vector<size_t>& first_part, std::vector<size_t>& second_part, size_t n_all,
-    size_t n_first, const std::vector<size_t>& mapping, std::mt19937_64 random_number_generator) {
+    size_t n_first, const std::vector<size_t>& mapping, pcg64 random_number_generator) {
   // Old end is start position for new data
   size_t first_old_size = first_part.size();
   size_t second_old_size = second_part.size();

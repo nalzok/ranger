@@ -19,6 +19,7 @@
 
 #include "globals.h"
 #include "Data.h"
+#include "pcg_random.hpp"
 
 namespace ranger {
 
@@ -154,7 +155,7 @@ protected:
   std::vector<size_t> inbag_counts;
 
   // Random number generator
-  std::mt19937_64 random_number_generator;
+  pcg64 random_number_generator;
 
   // Pointer to original data
   const Data* data;
